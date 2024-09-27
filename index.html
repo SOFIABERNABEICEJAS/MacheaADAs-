@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+        <!-- No usen svg como iconos. Debe ser un archivo local, de tipo .ico, llamado favicon -->
  <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>"
@@ -30,6 +32,7 @@
                     <span aria-hidden="true"></span>
                 </a>
             </div>
+            <!-- este id es innecesario -->
             <div id="navbarBasicExample" class="navbar-menu">
 
                 <div class="navbar-end">
@@ -38,8 +41,10 @@
                             <a class="button is-primary responsive" id="boton-balance">
                                 <span class="icon-text" >
                                     <span class="icon">
+                                      <!-- aria hidden tiene valor true, no entiendo el valor que le dieron aqui -->
                                         <i class="fas fa-chart-line mr-2" aria-hidden="icono balance"></i>
                                     </span>
+                                    <!-- la etiqueta es span!! repiten este error en los demas elementos -->
                                     <spam>Balance</spam>
                                 </span>
                             </a>
@@ -63,6 +68,8 @@
                     </div>
                 </div>
             </div>
+            <!-- esta etiqueta de cierre esta de mas, no hay div que se este cerrando
+            atencion al tabulado, es una guia para darse cuenta de esto -->
             </div>
         </nav> 
     </header>
@@ -93,6 +100,8 @@
                          <form>
                              <!-- select tipo-gastos-ganancias -->
                             <div class="field">
+                              <!-- en el for del label debe ir el id del elemento que quieren seleccionar, sino no sirve de nada
+                              este error se repite en varios lugares mas -->
                                 <label class="label is-fullwidth" for="tipo de gastos-opciones">Tipo</label>
                                 <div class="control">
                                   <div class="select is-fullwidth">
@@ -184,7 +193,7 @@
                         <!-- columns imagen -->
                         <div class="columns pt-6 pb-6">
                             <div class="column is-offset-3 is-6">
-                              <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_c8ofxiyl.json"  background="transparent"  speed="3"  style="width: 400px; height: 365px; display:flex; justify-content: center; align-items: center;"  loop  autoplay></lottie-player>
+                              <!-- <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_c8ofxiyl.json"  background="transparent"  speed="3"  style="width: 400px; height: 365px; display:flex; justify-content: center; align-items: center;"  loop  autoplay></lottie-player> -->
                             </div>
                         </div>
                         <div class="columns pb-4">
@@ -283,6 +292,7 @@
                 <label class="label" for="">Descripción</label>
                 <div class="control">
                   <div class="is-fullwidth">
+                    <!-- name no debe ir vacio. misma observacon en los demas elementos -->
                     <input class="input" type="text" name="" id="editar-descripcion" required>
                   </div>
                 </div>
@@ -482,6 +492,7 @@
                     <div class="column is-3 has-text-right has-text-weight-semibold">$0</div>
                 </div> 
              </div>
+             <!-- este div de cierre esta mal aca  -->
           </div>
          </article>
        </div>

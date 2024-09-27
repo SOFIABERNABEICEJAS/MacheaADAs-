@@ -57,6 +57,7 @@ const inputFechaNuevaOperacion = document.getElementById(
 	"input-fecha-nueva-operacion"
 );
 
+// declaran esta variable pero nunca la usan. mejor borrarla. 
 const formularioNuevaOperacion = document.getElementById(
 	"formulario-nueva-operacion"
 );
@@ -102,6 +103,8 @@ botonBalance.onclick = () => {
 	seccionCategoria.classList.add("is-hidden");
 	seccionReporte.classList.add("is-hidden");
 	seccionNuevaOperacion.classList.add("is-hidden");
+
+	// no dejen codigo comentado en una entrega
 	// divOperacionesImagenTexto.classList.remove("is-hidden");
 	divDatosOperacionesTitulo.classList.add("is-hidden");
 	// divDatosOperacionJs.classList.add("is-hidden");
@@ -245,6 +248,7 @@ const mostrarEnHTML = (array) => {
 
 // funcion auxiliar suma
 
+// la funcion se llama funcionSumar, pero esta restando!! 
 const funcionSumar = (num1, num2) => {
 	return num1 - num2;
 };
@@ -265,6 +269,10 @@ botonAgregarCategorias.onclick = () => {
 	};
 	agregarCategorias();
 	mostrarCategorias();
+
+	// necesitamos actualizar dos select distintos: este nos sirve para el form de agregar operaciones, 
+	// pero no nos sirve para el de filtrar las operaciones (allí nos hace falta una opción más
+	// 	para seleccionar "todos")
 	mostrarCategoriasSelect();
 	agregarOnClicks();
 };
@@ -282,6 +290,10 @@ const setearID = () => {
 	if (storageLocal.categorias.length > 0) {
 		// se fija cual es el ultimo
 		const obtenerItemUltimo =
+
+		// No vimos esta manera de acceder a las propiedades de un objeto, llamada bracket notation. 
+		// Me llama la atención que la estén usando aquí. Entienden bien qué hace este código?
+		// Prefiero un código que entiendan, a uno que esté bien pero no puedan entender ni reproducir si es necesario
 			storageLocal.categorias[storageLocal.categorias.length - 1];
 
 		// retorna el ultimo + 1
@@ -316,6 +328,9 @@ const mostrarCategorias = () => {
 	);
 	divMostrarCategoriasHtml.innerHTML = mostrarCategoriaHtml;
 };
+
+// estas funciones, que se ejecutan apenas carga el codigo, no deberian ir entre medio de la
+// declaracion de las funciones auxiliares. ponganlas todas juntas al final
 mostrarCategorias();
 
 const mostrarCategoriasSelect = () => {
@@ -331,6 +346,8 @@ const mostrarCategoriasSelect = () => {
 		},
 		""
 	);
+
+	// esto no sirve para el select de filtro ya que falta la opción "todos"
 	selectFiltroCategorias.innerHTML = mostrarCategoriaEnSelect;
 	selectCategoriaNuevaOperacion.innerHTML = mostrarCategoriaEnSelect;
 	selectEditarOperacionesModalCategoria.innerHTML = mostrarCategoriaEnSelect;
@@ -406,6 +423,13 @@ const ordenAZ = (ope1, ope2) => {
 	// si ambas son iguales
 	return 0;
 };
+
+// Este código está muy diferente al que vimos en clase
+// Con una mano en el corazón: entienden lo que está haciendo este switch? Tienen en claro lo que es un callback?
+// Si les pido que me expliquen paso a paso lo que está pasando acá, podrían hacerlo?
+// No necesito que escriban código que me impresione. No están en Ada para aprobar TPs. 
+// Están en Ada para aprender: espero que cada una se pregunte "qué aprendí con este código?". 
+// si la respuesta es "nada", todo este código es una oportunidad perdida. 
 const operacionOrdenar = (operacionesArray, ordenElegido) => {
 	//esta funcion nos ayuda verificando el value elegido por el usuario y retorna un callback segun corresponda
 	switch (ordenElegido) {
@@ -435,6 +459,7 @@ const operacionOrdenar = (operacionesArray, ordenElegido) => {
 			});
 		default:
 			return operacionesArray;
+			// no va break despues de return
 			break;
 	}
 };
@@ -453,6 +478,12 @@ const aplicarFiltros = () => {
 
 	// Filtrar por tipo si tengo un tipo seleccionado diferente a todos
 	if (selectTipo != "todos") {
+
+		// En filter retornamos la condicion que debe cumplir el elemento. 
+		// Deberia estar asi:
+		// resultado.filter((elemento) => {
+		// 	return selectTipo == elemento.tipo
+		// }
 		resultado = resultado.filter((elemento) => {
 			if (selectTipo == elemento.tipo) {
 				return elemento;
@@ -462,6 +493,7 @@ const aplicarFiltros = () => {
 
 	// Filtrar por categoria si tengo una categoria seleccionado diferente a todas
 	if (selectCategoria != "todas") {
+		// Misma observacion para este filter
 		resultado = resultado.filter((elemento) => {
 			if (selectCategoria == elemento.categoria) {
 				return elemento;
@@ -514,6 +546,8 @@ let categoriaAEditar = "";
 let operacionAEditar = "";
 //funcion eliminar categorias
 const agregarOnClicks = () => {
+
+	// Esta funcion es larguisima y medio ilegible. Traten de dividirla en funciones mas pequeñas. 
 	const botonesEliminarCategorias = document.querySelectorAll(
 		"#boton-eliminar-categoria"
 	);
@@ -527,6 +561,7 @@ const agregarOnClicks = () => {
 		"#boton-eliminar-operacion"
 	);
 	for (let i = 0; i < botonesEliminarCategorias.length; i++) {
+		// no dejen codigo comentado en una entrega
 		// const prueba = leerLocalStorage.id;
 		botonesEliminarCategorias[i].onclick = (e) => {
 			// Leo la informacion que tengo en el LocalStorage
@@ -588,6 +623,8 @@ const agregarOnClicks = () => {
 			);
 			//Seteo el valor del input con el nombre del elemento que se clickeo
 			inputEditarCategorias.value = nuevoArray[0].nombre;
+
+			// Aqui deberiamos llamar nuevamente a 	mostrarCategorias() y a  agregarOnClicks();
 		};
 	}
 
@@ -684,6 +721,9 @@ botonEditarOperacionesModal.onclick = () => {
 };
 
 // balance
+
+// Es buena idea ponerle siempre nombres de acciones a las funciones, y sustantivos a las variables. 
+// actualizarBalance() sería un mejor nombre aqui
 const balance = () => {
 	// buscar del localStorage
 	let balanceDatos = leerLocalStorage();
@@ -775,10 +815,14 @@ const separarPorCategoria = () => {
 
 	// Recorro operaciones pusheando al array de cada categoria la operacion correspondiente
 	operaciones.map((operacion) => {
+		// Este codigo es complejo, mas de lo que espero para esta etapa, y no funciona bien
+		// Hagan esta prueba: agreguen una operacion, y luego vayan a la seccion "categorias" y editen el nombre
+		// de la categoria de esa operacion.
+		// Van a notar que cuando vayan a la seccion Reportes van a tener un error en la consola: 
+		// indiceCategoria va a ser -1 para la categoria editada, por lo que este push va a fallar.  
 		const indiceCategoria = categorias.indexOf(operacion.categoria);
 		arrayOperacionPorCategoria[indiceCategoria].push(operacion);
 	});
-
 	return arrayOperacionPorCategoria;
 };
 
@@ -797,6 +841,8 @@ const calcularCategoria = (categoria) => {
 	}, 0);
 	const balance = sumaGanancias - sumaGastos;
 	// Devuelvo un array con los datos que necesito
+
+	// esto es mucho mas complejo de lo que espero de ustedes en esta etapa
 	return [sumaGanancias, sumaGastos, balance];
 };
 
@@ -815,6 +861,14 @@ const totalesPorCategoria = () => {
 			// Chequeo que el array este definido y tenga al menos un elemento
 			calculoCategoria = calcularCategoria(element);
 			// Le mando a la funcion que los muestra en html el nombre y los valores de la categoria
+
+			// no quiero ser malpensada pero me cuesta muchisimo creer que uds solas y sin ayuda
+			// hicieron una funcion que recibe como parametro un array que dentro de si tiene
+			// la propiedad de un elemento de una matriz y otro array. 
+			// de nuevo: no necesito que el codigo esté bien, necesito que ustedes aprendan. 
+			// qué aprendieron de la funcion mostrarTotalesCategorias?
+			// podrian escribirla de nuevo sin mirar este codigo?
+
 			mostrarTotalesCategorias([
 				// Nombre de la categoria
 				categoriasSeparadas[index][0].categoria,
